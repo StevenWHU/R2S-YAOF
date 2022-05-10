@@ -210,9 +210,9 @@ svn export https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng packa
 # CPU 控制相关
 svn export https://github.com/immortalwrt/luci/trunk/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
 ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
-sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
-sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
-sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
+sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
+sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
+sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/luci-app-cpulimit package/lean/luci-app-cpulimit
 svn export https://github.com/immortalwrt/packages/trunk/utils/cpulimit feeds/packages/utils/cpulimit
 ln -sf ../../../feeds/packages/utils/cpulimit ./package/feeds/packages/cpulimit
@@ -293,7 +293,7 @@ svn export https://github.com/QiuSimons/dragino2-teasiu/trunk/package/teasiu/luc
 svn export https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall package/new/luci-app-passwall
 pushd package/new/luci-app-passwall
 sed -i 's,default n,default y,g' Makefile
-sed -i '/trojan-go/d' Makefile
+sed -i '/trojan-plus/d' Makefile
 sed -i '/v2ray-core/d' Makefile
 sed -i '/v2ray-plugin/d' Makefile
 sed -i '/xray-plugin/d' Makefile
@@ -315,7 +315,22 @@ svn export https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/new
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/trojan-plus package/new/trojan-plus
 svn export https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/new/ssocks
 svn export https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/new/hysteria
-# passwall2
+# Passwall 白名单
+echo '
+checkip.synology.com
+checkipv6.synology.com
+checkport.synology.com
+ddns.synology.com
+account.synology.com
+whatismyip.akamai.com
+checkip.dyndns.org
+teamviewer.com
+bing.com
+api.ipify.org
+epicgames.com
+emby.kyarucloud.moe
+' >>./package/new/luci-app-passwall/root/usr/share/passwall/rules/direct_host
+# Passwall2
 svn export https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/new/luci-app-passwall2
 wget -P package/new/luci-app-passwall2/ https://github.com/QiuSimons/OpenWrt-Add/raw/master/move_2_services.sh
 chmod -R 755 ./package/new/luci-app-passwall2/move_2_services.sh
@@ -361,10 +376,10 @@ svn export https://github.com/coolsnowwolf/packages/trunk/net/redsocks2 package/
 svn export https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/lean/ipt2socks
 svn export https://github.com/xiaorouji/openwrt-passwall/trunk/trojan package/lean/trojan
 svn export https://github.com/xiaorouji/openwrt-passwall/trunk/tcping package/lean/tcping
-svn export https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/lean/trojan-go
 svn export https://github.com/fw876/helloworld/trunk/simple-obfs package/lean/simple-obfs
 svn export https://github.com/fw876/helloworld/trunk/naiveproxy package/lean/naiveproxy
 svn export https://github.com/fw876/helloworld/trunk/v2ray-core package/lean/v2ray-core
+svn export https://github.com/zxlhhyccc/bf-package-master/trunk/ctcgfw/sagernet-core package/lean/sagernet-core
 svn export https://github.com/fw876/helloworld/trunk/xray-core package/lean/xray-core
 svn export https://github.com/fw876/helloworld/trunk/v2ray-plugin package/lean/v2ray-plugin
 svn export https://github.com/fw876/helloworld/trunk/xray-plugin package/lean/xray-plugin
@@ -383,8 +398,9 @@ wget -qO - https://github.com/fw876/helloworld/commit/5bbf6e7.patch | patch -p1
 #wget -qO - https://github.com/fw876/helloworld/commit/ea3b4bd.patch | patch -p1
 popd
 pushd package/lean/luci-app-ssr-plus
+sed -i '/Trojan:/d' Makefile
 sed -i 's,default n,default y,g' Makefile
-sed -i '/trojan-go/d' Makefile
+sed -i '/trojan-plus/d' Makefile
 sed -i '/v2ray-core/d' Makefile
 sed -i '/v2ray-plugin/d' Makefile
 sed -i '/xray-plugin/d' Makefile
@@ -438,8 +454,9 @@ svn export https://github.com/coolsnowwolf/packages/trunk/net/vlmcsd package/lea
 git clone -b master --depth 1 https://github.com/jerrykuku/luci-app-vssr.git package/lean/luci-app-vssr
 git clone -b master --depth 1 https://github.com/jerrykuku/lua-maxminddb.git package/lean/lua-maxminddb
 pushd package/lean/luci-app-vssr
+sed -i '/Trojan:/d' Makefile
 sed -i 's,default n,default y,g' Makefile
-sed -i '/trojan-go/d' Makefile
+sed -i '/trojan-plus/d' Makefile
 sed -i '/v2ray-core/d' Makefile
 sed -i '/v2ray-plugin/d' Makefile
 sed -i '/xray-plugin/d' Makefile
